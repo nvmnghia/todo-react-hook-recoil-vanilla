@@ -39,7 +39,9 @@ function App() {
     <MasterTodo
       todos={todos}
       addTodo={addTodo}
-      />
+      removeTodo={removeTodo}
+      editTodo={editTodo}
+    />
   )
 
   return (
