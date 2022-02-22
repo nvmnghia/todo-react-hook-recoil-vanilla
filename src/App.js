@@ -6,6 +6,7 @@ import { todoFromContent } from './Todo';
 import { loadFromLocalStorage, saveToLocalStorage } from './local_storage';
 
 import AppOutlet from './components/app_outlet/AppOutlet';
+import MasterTodo from './components/master_todo/MasterTodo';
 
 function App() {
   // State setup
@@ -38,7 +39,7 @@ function App() {
   <BrowserRouter>
    <Routes>
      <Route path='/' element={<AppOutlet />}>
-      <Route path='' element={<div>nothing</div>} />
+      <Route path='' element={<MasterTodo />} />
      </Route>
    </Routes>
   </BrowserRouter>
