@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { todoFromContent } from './Todo';
 import { loadFromLocalStorage, saveToLocalStorage } from './local_storage';
+
+import AppOutlet from './components/app_outlet/AppOutlet';
 
 function App() {
   // State setup
@@ -34,7 +36,11 @@ function App() {
 
   return (
   <BrowserRouter>
-   <div>nothing</div>
+   <Routes>
+     <Route path='/' element={<AppOutlet />}>
+      <Route path='' element={<div>nothing</div>} />
+     </Route>
+   </Routes>
   </BrowserRouter>
   );
 }
