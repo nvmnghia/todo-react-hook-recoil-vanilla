@@ -10,7 +10,7 @@ export default function MasterTodo(props) {
         <h2>TODO</h2>
       </div>
 
-      <AddTodo add={props.addTodo} />
+      <AddTodo />
 
       <TodoList
         todos={props.todos}

@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
 
+import { useSetRecoilState } from 'recoil';
+import { todoListState } from '../../../recoil/todoState';
+
+import { todoFromContent } from '../../../Todo';
+
 //================================================================================
 // Validation
 //================================================================================
@@ -39,7 +44,9 @@ const DEFAULT_STATE = {
   errorMessage: '',
 };
 
-export default function AddTodo(props) {
+export default function AddTodo() {
+  const setTodos = useSetRecoilState(todoListState);
+
   const [content, setContent] = useState(DEFAULT_STATE.content);
   const [valid, setValid] = useState(DEFAULT_STATE.valid);
   const [errorMessage, setErrorMessage] = useState(DEFAULT_STATE.errorMessage);
@@ -71,7 +78,8 @@ export default function AddTodo(props) {
     }
 
     if (_valid) {
-      props.add(content);
+      const newTodo = todoFromContent(content);
+      setTodos((todos) => [...todos, newTodo]);
 
       setContent(DEFAULT_STATE.content);
       setValid(DEFAULT_STATE.valid);

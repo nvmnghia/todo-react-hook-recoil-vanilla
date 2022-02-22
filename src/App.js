@@ -4,7 +4,6 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { todoListState } from './recoil/todoState';
 
-import { todoFromContent } from './Todo';
 import { saveToLocalStorage } from './local_storage';
 
 import AppOutlet from './components/app_outlet/AppOutlet';
@@ -20,11 +19,6 @@ function App() {
   }, [todos]);
 
   // Edit state
-  const addTodo = (content) => {
-    // Todo constructor has side effect, thus can't be used inside updater function
-    const newTodo = todoFromContent(content);
-    setTodos((prevTodos) => [...prevTodos, newTodo]);
-  };
   const removeTodo = (id) => {
     setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
   };
@@ -46,12 +40,7 @@ function App() {
   ));
 
   const masterTodo = (
-    <MasterTodo
-      todos={todos}
-      addTodo={addTodo}
-      removeTodo={removeTodo}
-      editTodo={editTodo}
-    />
+    <MasterTodo todos={todos} removeTodo={removeTodo} editTodo={editTodo} />
   )
 
   return (
