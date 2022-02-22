@@ -37,6 +37,7 @@ function App() {
 
   const masterTodo = (
     <MasterTodo
+      todos={todos}
       addTodo={addTodo}
       />
   )

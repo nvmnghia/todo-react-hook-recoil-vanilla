@@ -1,6 +1,7 @@
 import React from 'react';
 
 import AddTodo from './add_todo/AddTodo';
+import TodoList from './todo_list/TodoList';
 
 export default function MasterTodo(props) {
   return (
@@ -10,6 +11,8 @@ export default function MasterTodo(props) {
       </div>
 
       <AddTodo add={props.addTodo} />
+
+      <TodoList todos={props.todos} />
     </>
   );
 }
