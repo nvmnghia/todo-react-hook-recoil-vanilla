@@ -1,9 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { todoListState } from './recoil/todoState';
 
 import { todoFromContent } from './Todo';
-import { loadFromLocalStorage, saveToLocalStorage } from './local_storage';
+import { saveToLocalStorage } from './local_storage';
 
 import AppOutlet from './components/app_outlet/AppOutlet';
 import MasterTodo from './components/master_todo/MasterTodo';
@@ -12,10 +14,7 @@ import NotFound from './components/not_found/NotFound';
 
 function App() {
   // State setup
-  const [todos, setTodos] = useState([]);
-  useEffect(() => {
-    setTodos(loadFromLocalStorage()); // Load initial
-  }, []);
+  const [todos, setTodos] = useRecoilState(todoListState);
   useEffect(() => {
     saveToLocalStorage(todos); // Save if changed
   }, [todos]);
