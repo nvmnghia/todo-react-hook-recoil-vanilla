@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { todoListState, todoOfId } from '../../../../recoil/todoState';
+
 import {
   EditButton,
   RemoveButton,
@@ -15,8 +18,14 @@ const LinkTodo = ({ todoId, ...props }) => (
   </Link>
 );
 
-const TodoItem = (props) => {
+const TodoItem = ({ id }) => {
   const navigate = useNavigate();
+
+  const setTodos = useSetRecoilState(todoListState);
+  const todo = useRecoilValue(todoOfId(id));
+  if (!todo) {
+    throw new Error('We fucked up somewhere');
+  }
 
   // Editing state: toggles textarea and changes buttons
   // - In editing mode: Save, Undo, Remove buttons
@@ -25,18 +34,26 @@ const TodoItem = (props) => {
   const toggleEditing = () => setEditing((editingState) => !editingState);
 
   // Temp content of textarea (controlled form)
-  const [tmpContent, setTmpContent] = useState(props.todo.content);
+  const [tmpContent, setTmpContent] = useState(todo.content);
 
-  const save = (content) => props.edit(props.todo.id, content);
+  const save = (content) => {
+    setTodos((todos) =>
+      todos.map((_todo) =>
+        _todo.id === id ? { id, content, date: new Date() } : _todo
+      )
+    );
+  };
+
   const remove = () => {
-    props.remove(props.todo.id);
+    setTodos((_todos) => _todos.filter((_todo) => _todo.id !== id));
+
     navigate('/');
   };
 
   const contentBox = editing ? (
     <TodoEditor tmpContent={tmpContent} onChange={setTmpContent} />
   ) : (
-    <TodoContent content={props.todo.content} />
+    <TodoContent content={todo.content} />
   );
   const editOrSaveButton = editing ? (
     <>
@@ -49,7 +66,7 @@ const TodoItem = (props) => {
       <UndoButton
         onClick={() => {
           toggleEditing();
-          setTmpContent(props.todo.content);
+          setTmpContent(todo.content);
         }}
       />
     </>
@@ -61,12 +78,12 @@ const TodoItem = (props) => {
     <div className='p-2 mb-2 border border-1 rounded-3'>
       <div className='d-flex align-items-start gap-2 mb-2'>
         <div className='align-self-center pe-2'>
-          <LinkTodo todoId={props.todo.id}>{props.todo.id}</LinkTodo>
+          <LinkTodo todoId={todo.id}>{todo.id}</LinkTodo>
         </div>
 
         <div className='flex-grow-1 align-self-center'>
-          <LinkTodo tabIndex={-1} todoId={props.todo.id}>
-            {props.todo.date.toLocaleString()}
+          <LinkTodo tabIndex={-1} todoId={todo.id}>
+            {todo.date.toLocaleString()}
           </LinkTodo>
         </div>
 

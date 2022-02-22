@@ -12,11 +12,7 @@ export default function MasterTodo(props) {
 
       <AddTodo />
 
-      <TodoList
-        todos={props.todos}
-        remove={props.removeTodo}
-        edit={props.editTodo}
-      />
+      <TodoList todos={props.todos} />
     </>
   );
 }

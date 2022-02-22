@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { todoListState } from './recoil/todoState';
 
 import { saveToLocalStorage } from './local_storage';
@@ -13,34 +13,22 @@ import NotFound from './components/not_found/NotFound';
 
 function App() {
   // State setup
-  const [todos, setTodos] = useRecoilState(todoListState);
+  const todos = useRecoilValue(todoListState);
   useEffect(() => {
     saveToLocalStorage(todos); // Save if changed
   }, [todos]);
-
-  // Edit state
-  const removeTodo = (id) => {
-    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
-  };
-  const editTodo = (id, content) => {
-    setTodos((prevTodos) =>
-      prevTodos.map((todo) =>
-        todo.id === id ? { id, content, date: new Date() } : todo
-      )
-    );
-  };
 
   // Links
   const links = todos.map((todo) => (
     <Route
       path={`${todo.id}`}
-      element={<DetailTodo todo={todo} remove={removeTodo} edit={editTodo} />}
+      element={<DetailTodo id={todo.id} />}
       key={todo.id}
     />
   ));
 
   const masterTodo = (
-    <MasterTodo todos={todos} removeTodo={removeTodo} editTodo={editTodo} />
+    <MasterTodo todos={todos} />
   )
 
   return (
