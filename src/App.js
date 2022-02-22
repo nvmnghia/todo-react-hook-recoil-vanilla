@@ -7,6 +7,7 @@ import { loadFromLocalStorage, saveToLocalStorage } from './local_storage';
 
 import AppOutlet from './components/app_outlet/AppOutlet';
 import MasterTodo from './components/master_todo/MasterTodo';
+import DetailTodo from './components/detail_todo/DetailTodo';
 import NotFound from './components/not_found/NotFound';
 
 function App() {
@@ -36,6 +37,15 @@ function App() {
     );
   };
 
+  // Links
+  const links = todos.map((todo) => (
+    <Route
+      path={`${todo.id}`}
+      element={<DetailTodo todo={todo} remove={removeTodo} edit={editTodo} />}
+      key={todo.id}
+    />
+  ));
+
   const masterTodo = (
     <MasterTodo
       todos={todos}
@@ -50,6 +60,7 @@ function App() {
    <Routes>
     <Route path='/' element={<AppOutlet />}>
       <Route path='' element={masterTodo} />
+      <Route path='todo'>{links}</Route>
     </Route>
 
     {/* Route order doesn't seem to affect paths match, which is good */}
