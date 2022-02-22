@@ -27,15 +27,11 @@ function App() {
     />
   ));
 
-  const masterTodo = (
-    <MasterTodo todos={todos} />
-  )
-
   return (
   <BrowserRouter>
    <Routes>
     <Route path='/' element={<AppOutlet />}>
-      <Route path='' element={masterTodo} />
+      <Route path='' element={<MasterTodo />} />
       <Route path='todo'>{links}</Route>
     </Route>
 

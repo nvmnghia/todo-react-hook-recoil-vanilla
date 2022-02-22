@@ -3,7 +3,7 @@ import React from 'react';
 import AddTodo from './add_todo/AddTodo';
 import TodoList from './todo_list/TodoList';
 
-export default function MasterTodo(props) {
+export default function MasterTodo() {
   return (
     <>
       <div className='row mt-4'>
@@ -12,7 +12,7 @@ export default function MasterTodo(props) {
 
       <AddTodo />
 
-      <TodoList todos={props.todos} />
+      <TodoList />
     </>
   );
 }
