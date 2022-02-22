@@ -7,6 +7,7 @@ import { loadFromLocalStorage, saveToLocalStorage } from './local_storage';
 
 import AppOutlet from './components/app_outlet/AppOutlet';
 import MasterTodo from './components/master_todo/MasterTodo';
+import NotFound from './components/not_found/NotFound';
 
 function App() {
   // State setup
@@ -47,9 +48,12 @@ function App() {
   return (
   <BrowserRouter>
    <Routes>
-     <Route path='/' element={<AppOutlet />}>
+    <Route path='/' element={<AppOutlet />}>
       <Route path='' element={masterTodo} />
-     </Route>
+    </Route>
+
+    {/* Route order doesn't seem to affect paths match, which is good */}
+    <Route path='*' element={<NotFound />} />
    </Routes>
   </BrowserRouter>
   );
