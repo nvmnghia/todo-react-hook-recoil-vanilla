@@ -35,11 +35,17 @@ function App() {
     );
   };
 
+  const masterTodo = (
+    <MasterTodo
+      addTodo={addTodo}
+      />
+  )
+
   return (
   <BrowserRouter>
    <Routes>
      <Route path='/' element={<AppOutlet />}>
-      <Route path='' element={<MasterTodo />} />
+      <Route path='' element={masterTodo} />
      </Route>
    </Routes>
   </BrowserRouter>
