@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -12,9 +13,10 @@ import {
 } from './TodoItemButtons';
 import { TodoContent, TodoEditor } from './TodoItemContent';
 
-const LinkTodo = ({ todoId, ...props }) => (
+// eslint-disable-next-line react/prop-types
+const LinkTodo = ({ todoId, children, ...props }) => (
   <Link className='text-muted' to={`/todo/${todoId}`} {...props}>
-    {props.children}
+    {children}
   </Link>
 );
 
@@ -93,5 +95,9 @@ const TodoItem = ({ id }) => {
     </div>
   );
 };
+
+TodoItem.propTypes = {
+  id: PropTypes.number
+}
 
 export default TodoItem;

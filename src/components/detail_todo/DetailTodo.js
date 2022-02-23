@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useRecoilValue } from 'recoil';
 import { todoOfId } from '../../recoil/todoState';
 
@@ -26,4 +27,8 @@ export default function DetailTodo({ id }) {
       <TodoItem id={id} />
     </>
   );
+}
+
+DetailTodo.propTypes = {
+  id: PropTypes.number
 }
