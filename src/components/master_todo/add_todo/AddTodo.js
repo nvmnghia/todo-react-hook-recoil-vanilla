@@ -79,7 +79,7 @@ export default function AddTodo() {
 
     if (_valid) {
       const newTodo = todoFromContent(content);
-      setTodos((todos) => [...todos, newTodo]);
+      setTodos((todos) => [newTodo, ...todos]);
 
       setContent(DEFAULT_STATE.content);
       setValid(DEFAULT_STATE.valid);
