@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useRecoilValue } from 'recoil';
+import { todoListState } from '../../recoil/todoState';
 
 import AddTodo from './add_todo/AddTodo';
 import TodoList from './todo_list/TodoList';
 
 export default function MasterTodo() {
+  const numOfTodos = useRecoilValue(todoListState).length;
+  useEffect(() => {
+    document.title = numOfTodos === 0 ? 'All done' : `${numOfTodos} todos left`;
+  }, [numOfTodos]);
+
   return (
     <>
       <div className='row mt-4'>
