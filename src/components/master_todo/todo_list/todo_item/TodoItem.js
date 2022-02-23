@@ -38,9 +38,7 @@ const TodoItem = ({ id }) => {
 
   const save = (content) => {
     setTodos((todos) =>
-      todos.map((_todo) =>
-        _todo.id === id ? { id, content, date: new Date() } : _todo
-      )
+      [{id, content, date: new Date(), ...todos.filter((_todo) => _todo.id !== id)}]
     );
   };
 
