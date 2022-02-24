@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { todoListState, todoOfId } from '../../../../recoil/todoState';
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
+import { todoIdsState, todoListState } from '../../../../recoil/todoState';
 
 import {
   EditButton,
@@ -23,8 +23,9 @@ const LinkTodo = ({ todoId, children, ...props }) => (
 const TodoItem = ({ id }) => {
   const navigate = useNavigate();
 
-  const setTodos = useSetRecoilState(todoListState);
-  const todo = useRecoilValue(todoOfId(id));
+  const [todo, setTodo] = useRecoilState(todoListState(id));
+  const deleteTodo = useResetRecoilState(todoListState(id));
+  const setTodoIds = useSetRecoilState(todoIdsState);
   if (!todo) {
     throw new Error('We fucked up somewhere');
   }
@@ -39,13 +40,12 @@ const TodoItem = ({ id }) => {
   const [tmpContent, setTmpContent] = useState(todo.content);
 
   const save = (content) => {
-    setTodos((todos) =>
-      [{id, content, date: new Date(), ...todos.filter((_todo) => _todo.id !== id)}]
-    );
+    setTodo({ id, content, date: new Date() });
   };
 
   const remove = () => {
-    setTodos((_todos) => _todos.filter((_todo) => _todo.id !== id));
+    deleteTodo();
+    setTodoIds((todoIds) => todoIds.filter((todoId) => todoId !== id));
 
     navigate('/');
   };
@@ -97,7 +97,7 @@ const TodoItem = ({ id }) => {
 };
 
 TodoItem.propTypes = {
-  id: PropTypes.number
-}
+  id: PropTypes.number,
+};
 
 export default TodoItem;

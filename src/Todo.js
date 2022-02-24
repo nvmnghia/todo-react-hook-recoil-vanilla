@@ -9,6 +9,8 @@ export const initializeCounter = () => {
   todoCounter = getCounter() ?? 1;
 };
 
+export const nextId = () => todoCounter;
+
 const todoFromContent = (content) => {
   const todo = {
     id: todoCounter,
@@ -24,9 +26,7 @@ const todoFromContent = (content) => {
 
 const todosFromJSON = (json) => {
   console.log(json);
-  return JSON.parse(json).map(
-    (tmp) => ({ ...tmp, date: new Date(tmp.date) })
-  );
+  return JSON.parse(json).map((tmp) => ({ ...tmp, date: new Date(tmp.date) }));
 };
 
 export { todoFromContent, todosFromJSON };

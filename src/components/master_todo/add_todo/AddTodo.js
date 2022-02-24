@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 
 import { useSetRecoilState } from 'recoil';
-import { todoListState } from '../../../recoil/todoState';
-
-import { todoFromContent } from '../../../Todo';
+import { nextId, todoFromContent } from '../../../Todo';
+import { todoIdsState, todoListState } from '../../../recoil/todoState';
 
 //================================================================================
 // Validation
@@ -45,15 +44,14 @@ const DEFAULT_STATE = {
 };
 
 export default function AddTodo() {
-  const setTodos = useSetRecoilState(todoListState);
+  const setTodoIds = useSetRecoilState(todoIdsState);
+  const setTodo = useSetRecoilState(todoListState(nextId()));
 
   const [content, setContent] = useState(DEFAULT_STATE.content);
   const [valid, setValid] = useState(DEFAULT_STATE.valid);
   const [errorMessage, setErrorMessage] = useState(DEFAULT_STATE.errorMessage);
 
-  const handleInput = ({
-    target: { value },
-  }) => {
+  const handleInput = ({ target: { value } }) => {
     if (valid === undefined) {
       // Don't validate just yet when the user first type
     } else {
@@ -79,7 +77,8 @@ export default function AddTodo() {
 
     if (_valid) {
       const newTodo = todoFromContent(content);
-      setTodos((todos) => [newTodo, ...todos]);
+      setTodoIds((todoIds) => [...todoIds, newTodo.id]);
+      setTodo(newTodo);
 
       setContent(DEFAULT_STATE.content);
       setValid(DEFAULT_STATE.valid);

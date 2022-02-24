@@ -2,29 +2,21 @@ import React, { useEffect } from 'react';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { todoListState } from './recoil/todoState';
-
-import { saveToLocalStorage } from './local_storage';
-
+import { todoIdsState } from './recoil/todoState';
+import { initializeCounter } from './Todo';
 import AppOutlet from './components/app_outlet/AppOutlet';
 import MasterTodo from './components/master_todo/MasterTodo';
 import DetailTodo from './components/detail_todo/DetailTodo';
 import NotFound from './components/NotFound';
 
 function App() {
-  // State setup
-  const todos = useRecoilValue(todoListState);
-  useEffect(() => {
-    saveToLocalStorage(todos); // Save if changed
-  }, [todos]);
+  const todoIds = useRecoilValue(todoIdsState);
+
+  useEffect(initializeCounter, []);
 
   // Links
-  const links = todos.map((todo) => (
-    <Route
-      path={`${todo.id}`}
-      element={<DetailTodo id={todo.id} />}
-      key={todo.id}
-    />
+  const links = todoIds.map((id) => (
+    <Route path={`${id}`} element={<DetailTodo id={id} />} key={id} />
   ));
 
   return (

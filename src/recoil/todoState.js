@@ -1,16 +1,16 @@
-import { atom, selectorFamily } from 'recoil';
+import { atom, atomFamily, selector } from 'recoil';
 
-import { loadFromLocalStorage } from '../local_storage';
-
-export const todoListState = atom({
-  key: 'todoListState',
-  default: loadFromLocalStorage(),
+export const todoIdsState = atom({
+  key: 'todoIdsState',
+  default: [],
 });
 
-export const todoOfId = selectorFamily({
-  key: 'todoOfId',
-  get:
-    (id) =>
-    ({ get }) =>
-      get(todoListState).find((todo) => todo.id === id),
+export const numOfTodosState = selector({
+  key: 'numOfSelector',
+  get: ({ get }) => get(todoIdsState).length,
+});
+
+export const todoListState = atomFamily({
+  key: 'todoListState',
+  default: undefined,
 });
