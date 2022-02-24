@@ -1,8 +1,9 @@
 import { atom, atomFamily, selector } from 'recoil';
+import { initialTodos } from '../data_loading/data_loading';
 
 export const todoIdsState = atom({
   key: 'todoIdsState',
-  default: [],
+  default: initialTodos.then((todos) => todos.map((todo) => todo.id)),
 });
 
 export const numOfTodosState = selector({
