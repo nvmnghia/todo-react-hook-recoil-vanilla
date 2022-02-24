@@ -17,3 +17,9 @@ export const todoListState = atomFamily({
     id // TODO: somehow move this outside, as now EVERY NEW todo will search the initial array
   ) => initialTodos.then((todos) => todos.find((todo) => todo.id === id)),
 });
+
+export const todoList = selector({
+  key: 'todoList',
+  get: ({ get }) =>
+    get(todoIdsState).map((todoId) => get(todoListState(todoId))),
+});
