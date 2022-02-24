@@ -6,6 +6,9 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const loadFromLocalStorage = async () => {
   await sleep(Math.random() * 1234);
+  if (Math.random() < 0.3) {
+    throw Error('BOMBAYAH');
+  }
 
   initializeCounter();
 

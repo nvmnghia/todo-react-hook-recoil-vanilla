@@ -7,6 +7,7 @@ import { RecoilRoot } from 'recoil';
 
 import App from './App';
 import Loading from './components/Loading';
+import ErrorBoundary from './components/ErrorBoundary';
 import reportWebVitals from './reportWebVitals';
 
 const FullPageLoading = () => (
@@ -18,9 +19,11 @@ const FullPageLoading = () => (
 ReactDOM.render(
   <React.StrictMode>
     <RecoilRoot>
-      <Suspense fallback={<FullPageLoading />}>
-        <App />
-      </Suspense>
+      <ErrorBoundary>
+        <Suspense fallback={<FullPageLoading />}>
+          <App />
+        </Suspense>
+      </ErrorBoundary>
     </RecoilRoot>
   </React.StrictMode>,
   document.getElementById('root')
