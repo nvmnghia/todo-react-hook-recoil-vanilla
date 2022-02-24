@@ -1,17 +1,26 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle';
 
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { RecoilRoot } from 'recoil';
 
 import App from './App';
+import Loading from './components/Loading';
 import reportWebVitals from './reportWebVitals';
+
+const FullPageLoading = () => (
+  <div className='vh-100 position-fixed top-50 start-50'>
+    <Loading />
+  </div>
+);
 
 ReactDOM.render(
   <React.StrictMode>
     <RecoilRoot>
-      <App />
+      <Suspense fallback={<FullPageLoading />}>
+        <App />
+      </Suspense>
     </RecoilRoot>
   </React.StrictMode>,
   document.getElementById('root')

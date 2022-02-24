@@ -2,7 +2,11 @@ import { initializeCounter, todosFromJSON } from './Todo';
 
 const ITEM_KEY = 'todos';
 
-const loadFromLocalStorage = () => {
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+const loadFromLocalStorage = async () => {
+  await sleep(Math.random() * 1234);
+
   initializeCounter();
 
   const json = localStorage.getItem(ITEM_KEY);
